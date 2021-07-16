@@ -22,3 +22,4 @@ class BaseModel(Model):
 class User(BaseModel):
     user_id = IntegerField(primary_key=True, unique=True)
     active = BooleanField(default=True)
+    requests = IntegerField(default=0)

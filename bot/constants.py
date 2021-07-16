@@ -13,54 +13,55 @@ class CallbackData:
 
 
 class ReplyButtons:
-    send_mailing = 'Send'
-    preview_mailing = 'Preview'
-    cancel_mailing = 'Cancel'
+    send_mailing = 'Отправить'
+    preview_mailing = 'Предпросмотр'
+    cancel_mailing = 'Отмена'
 
 
 class Keyboard:
     main = ReplyKeyboardMarkup([
         ['/start']
-    ])
+    ], resize_keyboard=True)
 
     admin = InlineKeyboardMarkup([
-        [InlineKeyboardButton('Check statistics', callback_data=CallbackData.statistics)],
-        [InlineKeyboardButton('Create broadcast', callback_data=CallbackData.mailing)],
-        [InlineKeyboardButton('Backup database', callback_data=CallbackData.backup)]
+        [InlineKeyboardButton('Посмотреть статистику', callback_data=CallbackData.statistics)],
+        [InlineKeyboardButton('Создать рассылку', callback_data=CallbackData.mailing)],
+        [InlineKeyboardButton('Копировать базу данных', callback_data=CallbackData.backup)]
     ])
 
     mailing = ReplyKeyboardMarkup([
         [ReplyButtons.send_mailing],
         [ReplyButtons.preview_mailing, ReplyButtons.cancel_mailing]
-    ])
+    ], resize_keyboard=True)
 
 
 class Message:
-    start = '<b>Hello there!</b>'
+    start = 'Привет!'
 
-    admin = 'Welcome to the admin panel!'
+    admin = 'Добро пожаловать в админскую панель!'
 
     statistics = (
-        "Bot's statistics:\n\n"
-        'Users in total: <b>{total_users}</b>\n'
-        'Active users: <b>{active_users}</b>'
+        '✨ <b>Статистика бота</b> ✨\n\n'
+        'Количество пользователей: <b>{total_users}</b>\n'
+        'Из них активных: <b>{active_users}</b>\n\n'
+        'Запросов за всё время: <b>{total_requests}</b>'
     )
 
-    mailing = 'Send a messaged for the broadcast'
+    mailing = 'Отправьте сообщение для рассылки'
 
-    received_mailing = "The message has been received. What's next?"
+    received_mailing = 'Сообщение получено. Что дальше?'
 
-    mailing_canceled = 'Broadcast has been cancelled'
+    mailing_canceled = 'Рассылка отменена'
 
-    mailing_started = 'Broadcast had started'
+    mailing_started = 'Рассылка началась'
 
     mailing_finished = (
-        'Message has been sent:\n\n'
-        'Users that perceived the message: {sent_count}'
+        'Сообщение отправлено успешно:\n\n'
+        'Получившие пользователи: {sent_count}'
     )
 
     unexpected_error = '<code>Telegram Error: {error}.\n\n{update}</code>'
 
-    backup = 'Backup of the database ({})'
+    backup = 'Бэкап базы данных ({})'
 
-    database_not_found = 'Database not found'
+    database_not_found = 'База данных не найдена'

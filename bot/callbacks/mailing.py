@@ -2,8 +2,11 @@ from telegram import Update, Message as TelegramMessage, TelegramError, Bot, Pho
 from telegram.ext import CallbackContext, ConversationHandler
 
 from threading import Thread
+from contextlib import suppress
 import logging
 import time
+
+from settings import ADMINS
 
 from ..constants import Message, Keyboard, States
 from ..models import User
@@ -143,19 +146,23 @@ def cancel_mailing_callback(update: Update, context: CallbackContext):
 
 
 def __send_mailing_callback(update: Update, context: CallbackContext):
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=Message.mailing_started,
-        reply_markup=Keyboard.main
-    )
+    for admin_id in ADMINS:
+        with suppress(Exception):
+            context.bot.send_message(
+                chat_id=admin_id,
+                text=Message.mailing_started,
+                reply_markup=Keyboard.main
+            )
 
     logging.info('Mailing has started')
     sent_count = __send_mailing(context)
 
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=Message.mailing_finished.format(sent_count=sent_count)
-    )
+    for admin_id in ADMINS:
+        with suppress(Exception):
+            context.bot.send_message(
+                chat_id=admin_id,
+                text=Message.mailing_finished.format(sent_count=sent_count)
+            )
 
     logging.info('Mailing has finished')
     return ConversationHandler.END

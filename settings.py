@@ -13,7 +13,6 @@ DEVELOPER = config.getint('bot', 'developer')
 # database section
 DATABASE_PATH = config.get('database', 'sqlite')
 
-
 # server section
 # HOST = 0
 # PORT = 0
