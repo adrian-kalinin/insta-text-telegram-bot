@@ -1,7 +1,7 @@
 from telegram.ext import Updater
-
-from configparser import ConfigParser
 import logging
+
+from settings import BOT_TOKEN
 
 from bot.models import database, User
 from bot.callbacks import error_callback
@@ -19,12 +19,9 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-# parse config
-config = ConfigParser()
-config.read('config.ini')
 
 # create updater
-updater = Updater(config.get('bot', 'token'))
+updater = Updater(BOT_TOKEN)
 dispatcher = updater.dispatcher
 
 
