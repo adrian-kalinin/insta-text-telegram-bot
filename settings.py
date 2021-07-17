@@ -7,7 +7,7 @@ config.read('config.ini')
 
 # bot section
 BOT_TOKEN = config.get('bot', 'token')
-ADMINS = tuple(map(int, config.get('bot', 'admins').split(',')))
+ADMINS = tuple(map(int, config.get('bot', 'admins').split(', ')))
 DEVELOPER = config.getint('bot', 'developer')
 
 # database section

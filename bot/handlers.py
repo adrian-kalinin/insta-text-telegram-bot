@@ -3,6 +3,7 @@ from telegram.ext import CommandHandler, MessageHandler, CallbackQueryHandler, C
 from settings import ADMINS
 
 from .constants import CallbackData, States, ReplyButtons
+from .utils.dictionary import dictionary
 from .callbacks import *
 
 
@@ -39,4 +40,16 @@ mailing_conversation_handler = ConversationHandler(
         ]
     },
     fallbacks=[]
+)
+
+# core
+
+font_handler = MessageHandler(
+    filters=Filters.text(list(dictionary.keys())),
+    callback=font_callback
+)
+
+back_handler = MessageHandler(
+    filters=Filters.text(ReplyButtons.back),
+    callback=back_callback
 )

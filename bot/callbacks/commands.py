@@ -1,5 +1,6 @@
 from telegram import Update, ParseMode
 from telegram.ext import CallbackContext
+import logging
 
 from ..models import User
 from ..constants import Message, Keyboard
@@ -14,6 +15,9 @@ def admin_command_callback(update: Update, context: CallbackContext):
 
 def start_command_callback(update: Update, context: CallbackContext):
     user, created = User.get_or_create(user_id=update.effective_user.id)
+
+    if created:
+        logging.info(f'User {update.effective_user.id} started bot ')
 
     if not user.active:
         user.active = True

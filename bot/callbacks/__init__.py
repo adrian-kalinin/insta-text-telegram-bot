@@ -12,3 +12,7 @@ from .mailing import (
     mailing_message_callback, preview_mailing_callback,
     cancel_mailing_callback, send_mailing_callback
 )
+
+from .core import (
+    font_callback, back_callback
+)
