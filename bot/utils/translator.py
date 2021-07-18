@@ -58,3 +58,30 @@ dictionary = {
     '𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡': str.maketrans(all_characters, 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡𝟘'),
     '０１２３４５６７８９': str.maketrans(all_characters, 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ０１２３４５６７８９０')
 }
+
+
+def translate_instagram(user_input: str):
+    lines = user_input.split('\n')
+    text = ''
+
+    for line in lines:
+        if len(line) > 2:
+            if line.startswith('..'):
+                text += '⠀⠀' + line[2:]
+
+            elif line.startswith(',,'):
+                count = 10 - len(line) // 4
+                text += '⠀ ' * count + line[2:]
+
+            else:
+                text += line
+
+            text += '\n'
+
+        elif line == '':
+            text += '⠀\n'
+
+        else:
+            text += line
+
+    return text

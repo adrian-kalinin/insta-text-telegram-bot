@@ -10,7 +10,8 @@ from bot.handlers import (
     start_handler, admin_handler,
     statistics_handler, backup_handler, mailing_conversation_handler,
     font_request_handler, font_translate_handler, back_handler,
-    antispam_request_handler, antispam_translate_handler
+    antispam_request_handler, antispam_translate_handler,
+    instagram_request_handler, instagram_translate_handler
 )
 
 
@@ -49,6 +50,8 @@ def bound_handlers():
     dispatcher.add_handler(font_translate_handler)
     dispatcher.add_handler(antispam_request_handler)
     dispatcher.add_handler(antispam_translate_handler)
+    dispatcher.add_handler(instagram_request_handler)
+    dispatcher.add_handler(instagram_translate_handler)
 
 
 # set up database
@@ -65,18 +68,18 @@ def main():
     configure_database()
 
     # setting up webhook
-    updater.start_webhook(
-        listen=settings.LISTEN,
-        port=settings.PORT,
-        url_path=settings.BOT_TOKEN,
-        key=settings.KEY_PATH,
-        cert=settings.CERT_PATH,
-        webhook_url=settings.WEBHOOK_URL.format(
-            host=settings.HOST,
-            port=settings.PORT,
-            token=settings.BOT_TOKEN
-        )
-    )
+    # updater.start_webhook(
+    #     listen=settings.LISTEN,
+    #     port=settings.PORT,
+    #     url_path=settings.BOT_TOKEN,
+    #     key=settings.KEY_PATH,
+    #     cert=settings.CERT_PATH,
+    #     webhook_url=settings.WEBHOOK_URL.format(
+    #         host=settings.HOST,
+    #         port=settings.PORT,
+    #         token=settings.BOT_TOKEN
+    #     )
+    # )
 
     # start bot
     updater.start_polling()

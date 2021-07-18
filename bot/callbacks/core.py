@@ -2,9 +2,16 @@ from telegram import Update
 from telegram.ext import CallbackContext
 import logging
 
-from ..utils.dictionary import dictionary, antispam
+from ..utils.translator import dictionary, antispam, translate_instagram
 from ..constants import Message, Keyboard
 from ..models import User
+
+
+def log_request(user_id):
+    query = User.update(requests=User.requests + 1).where(User.user_id == user_id)
+    query.execute()
+
+    logging.info(f'User {user_id} made a request')
 
 
 def font_request_callback(update: Update, context: CallbackContext):
@@ -26,10 +33,7 @@ def font_translate_callback(update: Update, context: CallbackContext):
     user_data = dispatcher.user_data[update.effective_user.id]
 
     if font := user_data.get('font'):
-        query = User.update(requests=User.requests + 1).where(User.user_id == update.effective_user.id)
-        query.execute()
-
-        logging.info(f'User {update.effective_user.id} made a request')
+        log_request(update.effective_user.id)
 
         text = update.effective_message.text
         translated = text.translate(dictionary[font])
@@ -66,12 +70,33 @@ def antispam_request_callback(update: Update, context: CallbackContext):
 
 
 def antispam_translate_callback(update: Update, context: CallbackContext):
-    query = User.update(requests=User.requests + 1).where(User.user_id == update.effective_user.id)
-    query.execute()
-
-    logging.info(f'User {update.effective_user.id} made a request')
+    log_request(update.effective_user.id)
 
     text = update.effective_message.text.translate(antispam)
+
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=text
+    )
+
+
+def instagram_request_callback(update: Update, context: CallbackContext):
+    from main import dispatcher
+
+    user_data = dispatcher.user_data[update.effective_user.id]
+    user_data[update.effective_message.text] = True
+
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=Message.instagram,
+        reply_markup=Keyboard.back
+    )
+
+
+def instagram_translate_callback(update: Update, context: CallbackContext):
+    log_request(update.effective_user.id)
+
+    text = translate_instagram(update.effective_message.text)
 
     context.bot.send_message(
         chat_id=update.effective_chat.id,

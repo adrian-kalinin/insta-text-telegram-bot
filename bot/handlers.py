@@ -2,9 +2,9 @@ from telegram.ext import CommandHandler, MessageHandler, CallbackQueryHandler, C
 
 from settings import ADMINS
 
-from .filters import font_filter, antispam_filter
+from .filters import font_filter, antispam_filter, instagram_filter
 from .constants import CallbackData, States, ReplyButtons
-from .utils.dictionary import dictionary
+from .utils.translator import dictionary
 from .callbacks import *
 
 
@@ -68,3 +68,14 @@ antispam_translate_handler = MessageHandler(
     filters=Filters.text & antispam_filter,
     callback=antispam_translate_callback
 )
+
+instagram_request_handler = MessageHandler(
+    filters=Filters.text(ReplyButtons.instagram),
+    callback=instagram_request_callback
+)
+
+instagram_translate_handler = MessageHandler(
+    filters=Filters.text & instagram_filter,
+    callback=instagram_translate_callback
+)
+

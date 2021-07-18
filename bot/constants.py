@@ -1,7 +1,7 @@
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 from itertools import islice
 
-from .utils.dictionary import dictionary
+from .utils.translator import dictionary
 
 
 def generate_main_buttons():
@@ -27,13 +27,14 @@ class ReplyButtons:
     cancel_mailing = 'Отмена'
 
     antispam = 'Антиспам'
+    instagram = 'Инстаграм'
 
     back = 'Назад'
 
 
 class Keyboard:
     main = ReplyKeyboardMarkup([
-        [ReplyButtons.antispam],
+        [ReplyButtons.instagram, ReplyButtons.antispam],
         *generate_main_buttons()
     ], resize_keyboard=True)
 
@@ -57,6 +58,16 @@ class Message:
     start = 'Привет!'
 
     send_text = 'Пришлите текст для конвертации в выбранный шрифт'
+
+    instagram = (
+        'Пришлите текст для обработки:\n\n'
+        '— Для разделения на абзацы пришлите текст, скопируйте ответ бота и вставьте в Инстаграм\n'
+        '— Для написания текста с красной строки поставьте две точки перед текстом\n'
+        '— Для создания текста по центру поставьте две запятые перед текстом\n\n'
+        'Например:\n\n'
+        '..Красная строка\n'
+        ',,Текст по центру'
+    )
 
     antispam = 'Пришлите текст для обхода цензуры'
 
