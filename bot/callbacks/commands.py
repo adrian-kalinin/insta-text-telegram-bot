@@ -2,7 +2,7 @@ from telegram import Update, ParseMode
 from telegram.ext import CallbackContext
 import logging
 
-from ..models import User
+from ..models import User, Source
 from ..constants import Message, Keyboard
 
 
@@ -18,6 +18,11 @@ def start_command_callback(update: Update, context: CallbackContext):
 
     if created:
         logging.info(f'User {update.effective_user.id} started bot ')
+
+    if args := context.args:
+        source, _ = Source.get_or_create(name=args[0])
+        source.users += 1
+        source.save()
 
     if not user.active:
         user.active = True

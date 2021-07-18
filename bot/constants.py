@@ -26,17 +26,20 @@ class ReplyButtons:
     preview_mailing = 'Предпросмотр'
     cancel_mailing = 'Отмена'
 
+    antispam = 'Антиспам'
+
     back = 'Назад'
 
 
 class Keyboard:
     main = ReplyKeyboardMarkup([
+        [ReplyButtons.antispam],
         *generate_main_buttons()
     ], resize_keyboard=True)
 
     back = ReplyKeyboardMarkup([
         [ReplyButtons.back]
-    ])
+    ], resize_keyboard=True)
 
     admin = InlineKeyboardMarkup([
         [InlineKeyboardButton('Посмотреть статистику', callback_data=CallbackData.statistics)],
@@ -55,6 +58,8 @@ class Message:
 
     send_text = 'Пришлите текст для конвертации в выбранный шрифт'
 
+    antispam = 'Пришлите текст для обхода цензуры'
+
     back_to_menu = 'Вы вернулись в главное меню'
 
     admin = 'Добро пожаловать в админскую панель!'
@@ -65,6 +70,8 @@ class Message:
         'Из них активных: <b>{active_users}</b>\n\n'
         'Запросов за всё время: <b>{total_requests}</b>'
     )
+
+    sources = 'Статистика по источникам:\n\n'
 
     mailing = 'Отправьте сообщение для рассылки'
 

@@ -2,6 +2,7 @@ from telegram.ext import CommandHandler, MessageHandler, CallbackQueryHandler, C
 
 from settings import ADMINS
 
+from .filters import font_filter, antispam_filter
 from .constants import CallbackData, States, ReplyButtons
 from .utils.dictionary import dictionary
 from .callbacks import *
@@ -42,14 +43,28 @@ mailing_conversation_handler = ConversationHandler(
     fallbacks=[]
 )
 
-# core
-
-font_handler = MessageHandler(
-    filters=Filters.text(list(dictionary.keys())),
-    callback=font_callback
-)
-
+# core handlers
 back_handler = MessageHandler(
     filters=Filters.text(ReplyButtons.back),
     callback=back_callback
+)
+
+font_request_handler = MessageHandler(
+    filters=Filters.text(list(dictionary.keys())),
+    callback=font_request_callback
+)
+
+font_translate_handler = MessageHandler(
+    filters=Filters.text & font_filter,
+    callback=font_translate_callback
+)
+
+antispam_request_handler = MessageHandler(
+    filters=Filters.text(ReplyButtons.antispam),
+    callback=antispam_request_callback
+)
+
+antispam_translate_handler = MessageHandler(
+    filters=Filters.text & antispam_filter,
+    callback=antispam_translate_callback
 )

@@ -14,5 +14,7 @@ from .mailing import (
 )
 
 from .core import (
-    font_callback, back_callback
+    font_request_callback, font_translate_callback,
+    antispam_request_callback, antispam_translate_callback,
+    back_callback
 )

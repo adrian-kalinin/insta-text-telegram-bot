@@ -3,13 +3,14 @@ import logging
 
 from settings import BOT_TOKEN
 
-from bot.models import database, User
+from bot.models import database, User, Source
 from bot.callbacks import error_callback
 
 from bot.handlers import (
     start_handler, admin_handler,
     statistics_handler, backup_handler, mailing_conversation_handler,
-    font_handler, back_handler
+    font_request_handler, font_translate_handler, back_handler,
+    antispam_request_handler, antispam_translate_handler
 )
 
 
@@ -43,14 +44,17 @@ def bound_handlers():
     dispatcher.add_handler(mailing_conversation_handler)
 
     # core handlers
-    dispatcher.add_handler(font_handler)
     dispatcher.add_handler(back_handler)
+    dispatcher.add_handler(font_request_handler)
+    dispatcher.add_handler(font_translate_handler)
+    dispatcher.add_handler(antispam_request_handler)
+    dispatcher.add_handler(antispam_translate_handler)
 
 
 # set up database
 def configure_database():
     database.connect()
-    database.create_tables([User])
+    database.create_tables([User, Source])
     database.close()
     logging.info('Database has been configured')
 
