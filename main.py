@@ -1,7 +1,7 @@
 from telegram.ext import Updater
 import logging
 
-from settings import BOT_TOKEN
+import settings
 
 from bot.models import database, User, Source
 from bot.callbacks import error_callback
@@ -23,7 +23,7 @@ logging.basicConfig(
 
 
 # create updater
-updater = Updater(BOT_TOKEN)
+updater = Updater(settings.BOT_TOKEN)
 dispatcher = updater.dispatcher
 
 
@@ -59,16 +59,24 @@ def configure_database():
     logging.info('Database has been configured')
 
 
-# set up webhook
-def configure_webhook():
-    pass
-
-
 def main():
     # setting up application
     bound_handlers()
     configure_database()
-    configure_webhook()
+
+    # setting up webhook
+    updater.start_webhook(
+        listen=settings.LISTEN,
+        port=settings.PORT,
+        url_path=settings.BOT_TOKEN,
+        key=settings.KEY_PATH,
+        cert=settings.CERT_PATH,
+        webhook_url=settings.WEBHOOK_URL.format(
+            host=settings.HOST,
+            port=settings.PORT,
+            token=settings.BOT_TOKEN
+        )
+    )
 
     # start bot
     updater.start_polling()

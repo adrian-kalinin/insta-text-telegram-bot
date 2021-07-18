@@ -9,15 +9,17 @@ config.read('config.ini')
 BOT_TOKEN = config.get('bot', 'token')
 ADMINS = tuple(map(int, config.get('bot', 'admins').split(', ')))
 DEVELOPER = config.getint('bot', 'developer')
+CHANNEL = config.get('bot', 'channel')
 
 # database section
 DATABASE_PATH = config.get('database', 'sqlite')
 
 # server section
-# HOST = 0
-# PORT = 0
+LISTEN = config.get('server', 'listen')
+HOST = config.get('server', 'host')
+PORT = config.getint('server', 'port')
 
 # webhook
-# webhook_url = https://{host}:{port}/{token}
-# key_path = webhook_data/pkey.pem
-# cert_path = webhook_data/cert.pem
+WEBHOOK_URL = config.get('webhook', 'webhook_url')
+KEY_PATH = config.get('webhook', 'key_path')
+CERT_PATH = config.get('webhook', 'cert_path')
