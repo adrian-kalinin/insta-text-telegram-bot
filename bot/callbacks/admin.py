@@ -30,7 +30,9 @@ def statistics_callback(update: Update, context: CallbackContext):
 
     text = Message.sources
 
-    for source in Source.select():
+    sources = Source.select().order_by(Source.users.desc())
+
+    for source in sources:
         text += f'{source.name} — {source.users}\n'
 
     context.bot.send_message(

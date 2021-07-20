@@ -27,15 +27,15 @@ class ReplyButtons:
     preview_mailing = 'Предпросмотр'
     cancel_mailing = 'Отмена'
 
-    instagram = 'Оформить текст'
-    antispam = 'Антиспам'
+    instagram = '📝 Оформить текст'
+    antispam = '🌚 Антиспам'
 
     back = 'Назад'
 
 
 class Keyboard:
     main = ReplyKeyboardMarkup([
-        [ReplyButtons.instagram, ReplyButtons.antispam],
+        [ReplyButtons.instagram], [ReplyButtons.antispam],
         *generate_main_buttons()
     ], resize_keyboard=True)
 
