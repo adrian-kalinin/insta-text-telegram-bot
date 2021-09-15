@@ -88,9 +88,9 @@ class Message:
     admin = 'Добро пожаловать в админскую панель!'
 
     statistics = (
-        '✨ <b>Статистика бота</b> ✨\n\n'
-        'Количество пользователей: <b>{total_users}</b>\n'
-        'Из них активных: <b>{active_users}</b>\n\n'
+        '<b>Статистика бота</b>\n\n'
+        'Активных пользователей: <b>{active_users}</b>\n'
+        'Всего пользователей: <b>{total_users}</b>\n\n'
         'Запросов за всё время: <b>{total_requests}</b>'
     )
 
@@ -105,8 +105,8 @@ class Message:
     mailing_started = 'Рассылка началась'
 
     mailing_finished = (
-        'Сообщение отправлено успешно:\n\n'
-        'Получившие пользователи: {sent_count}'
+        '<b>Рассылка отправлена успешно</b>:\n\n'
+        'Пользователи, получившие сообщение: {sent_count}'
     )
 
     unexpected_error = '<code>Telegram Error: {error}.\n\n{update}</code>'

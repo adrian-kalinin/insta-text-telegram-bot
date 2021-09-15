@@ -161,7 +161,8 @@ def __send_mailing_callback(_, context: CallbackContext):
         with suppress(Exception):
             context.bot.send_message(
                 chat_id=admin_id,
-                text=Message.mailing_finished.format(sent_count=sent_count)
+                text=Message.mailing_finished.format(sent_count=sent_count),
+                parse_mode=ParseMode.HTML
             )
 
     logging.info('Mailing has finished')
