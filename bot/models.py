@@ -1,4 +1,5 @@
-from peewee import SqliteDatabase, Model, IntegerField, BooleanField, CharField
+from peewee import Model, IntegerField, BooleanField, CharField
+from playhouse.sqliteq import SqliteQueueDatabase
 from configparser import ConfigParser
 
 
@@ -9,7 +10,7 @@ database_path = config.get('database', 'sqlite')
 
 
 # database connection
-database = SqliteDatabase(database_path)
+database = SqliteQueueDatabase(database_path)
 
 
 # base model for other models

@@ -30,8 +30,9 @@ dispatcher = updater.dispatcher
 
 # bound handlers to dispatcher
 def bound_handlers():
-    # noinspection PyTypeChecker
-    dispatcher.add_error_handler(error_callback)
+    if not settings.DEBUG:
+        # noinspection PyTypeChecker
+        dispatcher.add_error_handler(error_callback)
 
     # command handlers
     dispatcher.add_handler(admin_handler)
@@ -67,22 +68,25 @@ def main():
     bound_handlers()
     configure_database()
 
-    # setting up webhook
-    # updater.start_webhook(
-    #     listen=settings.LISTEN,
-    #     port=settings.PORT,
-    #     url_path=settings.BOT_TOKEN,
-    #     key=settings.KEY_PATH,
-    #     cert=settings.CERT_PATH,
-    #     webhook_url=settings.WEBHOOK_URL.format(
-    #         host=settings.HOST,
-    #         port=settings.PORT,
-    #         token=settings.BOT_TOKEN
-    #     )
-    # )
+    if not settings.DEBUG:
+        # webhook on production
+        updater.start_webhook(
+            listen=settings.LISTEN,
+            port=settings.PORT,
+            url_path=settings.BOT_TOKEN,
+            key=settings.KEY_PATH,
+            cert=settings.CERT_PATH,
+            webhook_url=settings.WEBHOOK_URL.format(
+                host=settings.HOST,
+                port=settings.PORT,
+                token=settings.BOT_TOKEN
+            )
+        )
 
-    # start bot
-    updater.start_polling()
+    else:
+        # long polling on development
+        updater.start_polling()
+
     logging.info('Bot has started')
 
 

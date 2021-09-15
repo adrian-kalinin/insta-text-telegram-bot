@@ -145,7 +145,7 @@ def cancel_mailing_callback(update: Update, context: CallbackContext):
     return ConversationHandler.END
 
 
-def __send_mailing_callback(update: Update, context: CallbackContext):
+def __send_mailing_callback(_, context: CallbackContext):
     for admin_id in ADMINS:
         with suppress(Exception):
             context.bot.send_message(
@@ -165,9 +165,9 @@ def __send_mailing_callback(update: Update, context: CallbackContext):
             )
 
     logging.info('Mailing has finished')
-    return ConversationHandler.END
 
 
 def send_mailing_callback(update: Update, context: CallbackContext):
     mailing_thread = Thread(target=__send_mailing_callback, args=(update, context))
     mailing_thread.start()
+    return ConversationHandler.END
